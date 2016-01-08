@@ -10,14 +10,15 @@ public class HttpUtil {
 	
 	public static void sendHttpRequest(final String address,final HttpCallbackListener listener) {
 		new Thread(){
+			@Override
 			public void run() {
 				HttpURLConnection connection = null;
 				try {
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
 					connection.setRequestMethod("GET");
-					connection.setReadTimeout(5000);
-					connection.setConnectTimeout(5000);
+					connection.setReadTimeout(8000);
+					connection.setConnectTimeout(8000);
 					InputStream is = connection.getInputStream();
 					BufferedReader br = new BufferedReader(new InputStreamReader(is));
 					StringBuilder response = new StringBuilder();
@@ -40,8 +41,7 @@ public class HttpUtil {
 						connection.disconnect();
 					}
 				}
-				
-			};
+			}	
 		}.start();
 	}
 

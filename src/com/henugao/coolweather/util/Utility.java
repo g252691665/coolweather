@@ -53,12 +53,14 @@ public class Utility {
 	public static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB,
 			String response,int provinceId){
 		if (!TextUtils.isEmpty(response)) {
+			System.out.println("===>handleCitiesResponse"+response);
 			String[] allCities = response.split(",");
 			if (allCities !=null && allCities.length > 0 ) {
 				for (String city : allCities) {
 					String[] split = city.split("\\|");
 					City c = new City();
 					c.setCityCode(split[0]);
+					System.out.println("===>handleCitiesResponse:split[0]"+split[0]);
 					c.setCityName(split[1]);
 					c.setProvinceId(provinceId);
 					coolWeatherDB.saveCity(c);
@@ -87,6 +89,7 @@ public class Utility {
 					County c = new County();
 					c.setCountyCode(split[0]);
 					c.setCountyName(split[1]);
+					System.out.println("===>"+split[1]);
 					c.setCityId(cityId);
 					coolWeatherDB.saveCounty(c);
 				}
