@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 
 public class ChooseAreaActivity extends Activity {
-	public static final String INFO_TAG= "ChooseAreaActivityHenugao";
+	
 	
 	public static final int LEVEL_PROVINCE = 0;
 	public static final int LEVEL_CITY = 1;
@@ -143,7 +143,6 @@ public class ChooseAreaActivity extends Activity {
 	public void queryFromServer(final String code,final String type) {
 		String address;
 		if (!TextUtils.isEmpty(code)) {
-			System.out.println("====>"+code);
 			address = "http://www.weather.com.cn/data/list3/city" + code +".xml";
 		}else {
 			address = "http://www.weather.com.cn/data/list3/city.xml";
@@ -152,16 +151,12 @@ public class ChooseAreaActivity extends Activity {
 		HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
 			@Override
 			public void onFinish(String response) {
-				System.out.println("response====>"+response);
 				boolean result =false;
 				if ("province".equals(type)) {
-					Log.i(INFO_TAG+"=>type", type);
 					result = Utility.handleProvincesResponse(coolWeatherDB, response);
 				} else if("city".equals(type)) {
-					Log.i(INFO_TAG+"=>type", type);
 					result = Utility.handleCitiesResponse(coolWeatherDB, response, selectedProvince.getId());
 				} else if("county".equals(type)) {
-					Log.i(INFO_TAG+"=>type", type);
 					result = Utility.handleCountiesResponse(coolWeatherDB, response, selectedCity.getId());
 				}
 				if (result) {
