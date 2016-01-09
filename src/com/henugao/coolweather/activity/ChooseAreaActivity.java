@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.henugao.coolweather.R;
+import com.henugao.coolweather.WeatherActivity;
 import com.henugao.coolweather.db.dao.CoolWeatherDB;
 import com.henugao.coolweather.model.City;
 import com.henugao.coolweather.model.County;
@@ -14,6 +15,7 @@ import com.henugao.coolweather.util.Utility;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -74,6 +76,11 @@ public class ChooseAreaActivity extends Activity {
 				} else if (currentLevel == LEVEL_CITY) {
 					selectedCity = cityList.get(position);
 					queryCounties();
+				} else if (currentLevel == LEVEL_COUNTY) {
+					String countyCode = countyList.get(position).getCountyCode();
+					Intent intent = new Intent(ChooseAreaActivity.this,WeatherActivity.class);
+					intent.putExtra("county_code", countyCode);
+					startActivity(intent);
 				}
 			}
 		});
