@@ -15,6 +15,7 @@ import com.henugao.coolweather.util.Utility;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -53,10 +54,20 @@ public class ChooseAreaActivity extends Activity {
 	private City selectedCity;
 	private ProgressDialog progressDialog;
 	
-
+	//是否是从weatheractivity跳转过来的
+	private  boolean isFromWeatherActivity;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false);
+		SharedPreferences sp = getSharedPreferences("weather", 0);
+		//已经选中了城市,并且不是从weatheractivity跳转过来的,才会直接跳转到weatheractivity
+		if (sp.getBoolean("city_selected", false) && !isFromWeatherActivity) {
+			Intent intent = new Intent(this,WeatherActivity.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.choose_area);
 		listView = (ListView) findViewById(R.id.list_view);
@@ -230,6 +241,10 @@ public class ChooseAreaActivity extends Activity {
 		} else if(currentLevel == LEVEL_CITY) {
 			queryProvinces();
 		}else {
+			if (isFromWeatherActivity) {
+				Intent i = new Intent(this,WeatherActivity.class);
+				startActivity(i);
+			}
 			finish();
 		}
 	}

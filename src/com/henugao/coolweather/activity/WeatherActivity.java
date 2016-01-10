@@ -3,6 +3,7 @@ package com.henugao.coolweather.activity;
 import com.henugao.coolweather.R;
 import com.henugao.coolweather.R.id;
 import com.henugao.coolweather.R.layout;
+import com.henugao.coolweather.service.AutoUpdateService;
 import com.henugao.coolweather.util.HttpCallbackListener;
 import com.henugao.coolweather.util.HttpUtil;
 import com.henugao.coolweather.util.Utility;
@@ -59,6 +60,8 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		temp2Text = (TextView) findViewById(R.id.temp2);
 		currentDateText = (TextView) findViewById(R.id.current_date);
 
+		Intent intent  = new Intent(this,AutoUpdateService.class);
+		startService(intent);
 		String countyCode = getIntent().getStringExtra("county_code");
 		if (!TextUtils.isEmpty(countyCode)) {
 			// 有县级代号就去查询天气
@@ -155,6 +158,7 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		case R.id.switch_city:
 			Intent intent = new Intent(WeatherActivity.this,
 					ChooseAreaActivity.class);
+			intent.putExtra("from_weather_activity", true);
 			startActivity(intent);
 			finish();
 			break;
