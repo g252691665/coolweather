@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.henugao.coolweather.R;
-import com.henugao.coolweather.WeatherActivity;
 import com.henugao.coolweather.db.dao.CoolWeatherDB;
 import com.henugao.coolweather.model.City;
 import com.henugao.coolweather.model.County;
